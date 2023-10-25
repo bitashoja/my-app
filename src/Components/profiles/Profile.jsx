@@ -21,7 +21,7 @@ export default function Profile({ data }) {
                     ? "alive"
                     : "unknown"
                 }>
-                <h3 className="characterName">{character.name}</h3>
+                <h3 className="characterName">..{character.name}</h3>
               </div>
               <Link to={character.id}>
                 <button className="characterButton">Profile</button>
