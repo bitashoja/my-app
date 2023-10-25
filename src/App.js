@@ -1,5 +1,5 @@
 import "./App.css";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ProfileDetails from "./Components/profiles/ProfileDetails";
 import { ProfileContexts } from "./Components/contexts/ProfileContexts";
 import { useQuery, gql } from "@apollo/client";
@@ -40,14 +40,14 @@ function App() {
       <div className="App">
         <HeaderSearch />
         <Routes>
-          <Route
+          {/* <Route
             path="/"
             element={
               <div>
                 <Link to="/profile">profile</Link>
               </div>
             }
-          />
+          /> */}
           <Route path="/profile">
             <Route index element={<Profile data={data} />} />
             <Route path=":id" element={<ProfileDetails />} />

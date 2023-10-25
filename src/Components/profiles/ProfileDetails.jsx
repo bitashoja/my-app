@@ -10,7 +10,7 @@ export default function ProfileDetails() {
 
   return (
     <div>
-      {data?.characters.location.find(
+      {data?.characters.results.find(
         (character) =>
           character.id === id && (
             <div className="characterProfile">
