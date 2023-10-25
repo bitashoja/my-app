@@ -1,24 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { Link, Route, Routes } from "react-router-dom";
+import ProfileDetails from "./Components/profiles/ProfileDetails";
+import { ProfileContexts } from "./Components/contexts/ProfileContexts";
+import { useQuery, gql } from "@apollo/client";
+import { useEffect } from "react";
+import Profile from "./Components/profiles/Profile";
+import HeaderSearch from "./Components/searches/HeaderSearch";
+const GET_DATA = gql`
+  {
+    characters(page: 2, filter: { name: "rick" }) {
+      info {
+        count
+      }
+      results {
+        name
+        image
+        status
+        species
+        type
+        gender
+        id
+      }
+    }
+    location(id: 1) {
+      id
+    }
+    episodesByIds(ids: [1, 2]) {
+      id
+    }
+  }
+`;
 function App() {
+  const { loading, error, data } = useQuery(GET_DATA);
+  useEffect(() => {
+    console.log(loading, error, data);
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ProfileContexts.Provider value={data}>
+      <div className="App">
+        <HeaderSearch />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <Link to="/profile">profile</Link>
+              </div>
+            }
+          />
+          <Route path="/profile">
+            <Route index element={<Profile data={data} />} />
+            <Route path=":id" element={<ProfileDetails />} />
+          </Route>
+        </Routes>
+      </div>
+    </ProfileContexts.Provider>
   );
 }
 
