@@ -1,11 +1,11 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import ProfileDetails from "./Components/profiles/ProfileDetails";
 import { ProfileContexts } from "./Components/contexts/ProfileContexts";
 import { useQuery, gql } from "@apollo/client";
 import { useEffect } from "react";
 import Profile from "./Components/profiles/Profile";
-import HeaderSearch from "./Components/searches/HeaderSearch";
+
 const GET_DATA = gql`
   {
     characters(page: 2, filter: { name: "rick" }) {
@@ -38,16 +38,15 @@ function App() {
   return (
     <ProfileContexts.Provider value={data}>
       <div className="App">
-        <HeaderSearch />
         <Routes>
-          {/* <Route
+          <Route
             path="/"
             element={
               <div>
                 <Link to="/profile">profile</Link>
               </div>
             }
-          /> */}
+          />
           <Route path="/profile">
             <Route index element={<Profile data={data} />} />
             <Route path=":id" element={<ProfileDetails />} />
