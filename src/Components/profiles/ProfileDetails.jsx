@@ -8,11 +8,11 @@ export default function ProfileDetails() {
 
   console.log("id :>> ", id);
   const character = data.characters.results.find((item) => item.id === id);
-
+  if (!character) {
+    return <div>Page not found</div>;
+  }
   return (
     <div>
-      {character.id !== id && "Page not found"}
-
       <div className="characterProfile">
         <img src={character.image} alt="character" className="characterImage" />
         <h2>Profile {id}</h2>

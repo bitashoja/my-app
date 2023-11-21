@@ -7,8 +7,8 @@ import { useEffect } from "react";
 import Profile from "./Components/profiles/Profile";
 
 const GET_DATA = gql`
-  {
-    characters(page: 2, filter: { name: "rick" }) {
+  query characters($page: Int) {
+    characters(page: $page) {
       info {
         count
       }
@@ -22,18 +22,12 @@ const GET_DATA = gql`
         id
       }
     }
-    location(id: 1) {
-      id
-    }
-    episodesByIds(ids: [1, 2]) {
-      id
-    }
   }
 `;
 function App() {
   const { loading, error, data } = useQuery(GET_DATA);
   useEffect(() => {
-    console.log(loading, error, data);
+    console.log(data);
   });
   return (
     <ProfileContexts.Provider value={data}>
