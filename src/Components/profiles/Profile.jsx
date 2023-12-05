@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Profile.css";
+
 export default function Profile({ data }) {
   const [query, setQuery] = useState("");
+  if (data.length === 0) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
@@ -22,7 +26,7 @@ export default function Profile({ data }) {
         </p>
       </div>
       <div className="characterApp">
-        {data?.characters.results
+        {data
           .filter((character) => {
             if (query === "") {
               return character;

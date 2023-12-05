@@ -1,9 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import { ProfileContexts } from "./Components/contexts/ProfileContexts";
 import Profile from "./Components/profiles/Profile";
 import ProfileDetails from "./Components/profiles/ProfileDetails";
+import "./App.css";
+import * as React from "react";
 
 export const GET_CHARACTERS = gql`
   query characters($page: Int) {
@@ -53,24 +54,30 @@ export const GET_CHARACTERS = gql`
 // `;
 
 function App() {
-  const { loading, error, data } = useQuery(
-    GET_CHARACTERS
-    // GET_CHARACTER_BY_IDS,
-    // GET_CHARACTERS_BY_NAME,
-  );
+  const [page, setPage] = React.useState(1);
+  const [characters, setCharacters] = React.useState([]);
+  const { loading, error } = useQuery(GET_CHARACTERS, {
+    variables: { page: page },
+    onCompleted: (data) => {
+      console.log("data.characters.results", data.characters.results);
+      if (data.characters.results) {
+        setCharacters([...characters, ...data.characters.results]);
+      }
+    },
+  });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading && !characters) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
   return (
-    <ProfileContexts.Provider value={data}>
+    <ProfileContexts.Provider value={characters}>
       <div className="App">
         <Routes>
-          <Route index element={<Profile data={data} />} />
+          <Route index element={<Profile data={characters} />} />
           <Route path="/profile">
             <Route path=":id" element={<ProfileDetails />} />
           </Route>
         </Routes>
+        <button onClick={() => setPage(page + 1)}>Load More</button>
       </div>
     </ProfileContexts.Provider>
   );
