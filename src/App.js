@@ -7,8 +7,8 @@ import "./App.css";
 import * as React from "react";
 
 export const GET_CHARACTERS = gql`
-  query characters($page: Int) {
-    characters(page: $page) {
+  query characters($page: Int, $name: String) {
+    characters(page: $page, filter: { name: $name }) {
       info {
         count
       }
@@ -55,16 +55,22 @@ export const GET_CHARACTERS = gql`
 
 function App() {
   const [page, setPage] = React.useState(1);
+  const [query, setQuery] = React.useState("");
   const [characters, setCharacters] = React.useState([]);
+
   const { loading, error } = useQuery(GET_CHARACTERS, {
-    variables: { page: page },
+    variables: { page: page, name: query },
     onCompleted: (data) => {
-      console.log("data.characters.results", data.characters.results);
       if (data.characters.results) {
         setCharacters([...characters, ...data.characters.results]);
       }
     },
   });
+
+  const onQueryChange = (value) => {
+    setCharacters([]);
+    setQuery(value);
+  };
 
   if (loading && !characters) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -72,7 +78,10 @@ function App() {
     <ProfileContexts.Provider value={characters}>
       <div className="App">
         <Routes>
-          <Route index element={<Profile data={characters} />} />
+          <Route
+            index
+            element={<Profile data={characters} setQuery={onQueryChange} />}
+          />
           <Route path="/profile">
             <Route path=":id" element={<ProfileDetails />} />
           </Route>

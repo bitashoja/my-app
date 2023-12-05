@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Profile.css";
 
-export default function Profile({ data }) {
-  const [query, setQuery] = useState("");
-  if (data.length === 0) {
-    return <p>Loading...</p>;
-  }
-
+export default function Profile({ data, setQuery }) {
   return (
     <div>
       <div className="headerSearch">
@@ -26,41 +21,31 @@ export default function Profile({ data }) {
         </p>
       </div>
       <div className="characterApp">
-        {data
-          .filter((character) => {
-            if (query === "") {
-              return character;
-            } else if (
-              character.name.toLowerCase().includes(query.toLowerCase())
-            ) {
-              return character;
-            }
-          })
-          .map((character) => {
-            return (
-              <div key={character.id} className="character">
-                <img
-                  src={character.image}
-                  alt="character"
-                  className="characterImage"
-                />
-                <div
-                  className={
-                    character.status === "Dead"
-                      ? "dead"
-                      : character.status === "Alive"
-                      ? "alive"
-                      : "unknown"
-                  }
-                >
-                  <h3 className="characterName">{character.name}</h3>
-                </div>
-                <Link to={`/profile/${character.id}`} key={character.id}>
-                  <button className="characterButton">Profile</button>
-                </Link>
+        {data.map((character) => {
+          return (
+            <div key={character.id} className="character">
+              <img
+                src={character.image}
+                alt="character"
+                className="characterImage"
+              />
+              <div
+                className={
+                  character.status === "Dead"
+                    ? "dead"
+                    : character.status === "Alive"
+                    ? "alive"
+                    : "unknown"
+                }
+              >
+                <h3 className="characterName">{character.name}</h3>
               </div>
-            );
-          })}
+              <Link to={`/profile/${character.id}`} key={character.id}>
+                <button className="characterButton">Profile</button>
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
