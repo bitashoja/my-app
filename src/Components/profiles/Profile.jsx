@@ -47,10 +47,11 @@ export default function Profile({ data }) {
                       : character.status === "Alive"
                       ? "alive"
                       : "unknown"
-                  }>
+                  }
+                >
                   <h3 className="characterName">{character.name}</h3>
                 </div>
-                <Link to={character.id}>
+                <Link to={`/profile/${character.id}`} key={character.id}>
                   <button className="characterButton">Profile</button>
                 </Link>
               </div>
