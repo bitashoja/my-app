@@ -5,10 +5,11 @@ import Profile from "./Components/profiles/Profile";
 import ProfileDetails from "./Components/profiles/ProfileDetails";
 import "./App.css";
 import * as React from "react";
-import { GET_CHARACTERS } from "./graphql/queries";
-
+import { GET_CHARACTERS } from "./Components/graphql/queries";
+import Pagination from "./Components/Pagination/Pagination";
 function App() {
   const [page, setPage] = React.useState(1);
+
   const [query, setQuery] = React.useState("");
   const [characters, setCharacters] = React.useState([]);
 
@@ -27,7 +28,7 @@ function App() {
   };
 
   if (loading && !characters) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>Error :</p>;
   return (
     <ProfileContexts.Provider value={characters}>
       <div className="App">
@@ -40,7 +41,7 @@ function App() {
             <Route path=":id" element={<ProfileDetails />} />
           </Route>
         </Routes>
-        <button onClick={() => setPage(page + 1)}>Load More</button>
+        <Pagination page={page} setPage={setPage} />
       </div>
     </ProfileContexts.Provider>
   );
