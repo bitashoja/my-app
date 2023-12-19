@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Profile.css";
+import * as React from "react";
 
 export default function Profile({ data, setQuery }) {
   return (
@@ -36,8 +36,7 @@ export default function Profile({ data, setQuery }) {
                     : character.status === "Alive"
                     ? "alive"
                     : "unknown"
-                }
-              >
+                }>
                 <h3 className="characterName">{character.name}</h3>
               </div>
               <Link to={`/profile/${character.id}`} key={character.id}>
