@@ -34,12 +34,27 @@ export default function ProfileDetails() {
           alt="character"
           className="characterImage"
         />
-        <h2>ProfileId: {id}</h2>
-        <h3>Name:{characters[0]?.name}</h3>
-
-        <h3>Species:{characters[0]?.species}</h3>
-        <h3>Type:{characters[0]?.type}</h3>
-        <h3>Gender:{characters[0]?.gender}</h3>
+        <h2>
+          <strong>ProfileId:</strong> {id}
+        </h2>
+        <h3>
+          <strong>Name:</strong> {characters[0]?.name}
+        </h3>
+        <h3>
+          <strong>Status:</strong> {characters[0]?.status}
+        </h3>
+        <h3>
+          <strong>Species:</strong> {characters[0]?.species}
+        </h3>
+        <h3>
+          <strong>Type:</strong> {characters[0]?.type}
+        </h3>
+        <h3>
+          <strong>Gender:</strong> {characters[0]?.gender}
+        </h3>
+        <h3>
+          <strong>Location:</strong> {characters[0]?.location.name}
+        </h3>
       </div>
     </div>
   );

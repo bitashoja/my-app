@@ -41,7 +41,7 @@ function App() {
             <Route path=":id" element={<ProfileDetails />} />
           </Route>
         </Routes>
-        <Pagination page={page} setPage={setPage} />
+        <Pagination data={characters} />
       </div>
     </ProfileContexts.Provider>
   );
