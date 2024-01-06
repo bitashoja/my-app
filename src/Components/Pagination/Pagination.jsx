@@ -40,7 +40,9 @@ export default function Pagination({ characters, data }) {
           {numbers.map((n, id) => {
             console.log("n :>> ", n);
             <li
-              className={`page-item ${currentPage === n ? "active" : ""}`}
+              className={`page-item ${
+                currentPage === characters[0] ? "active" : ""
+              }`}
               key={id}>
               <Link
                 href="#"
